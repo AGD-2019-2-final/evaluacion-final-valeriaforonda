@@ -1,7 +1,7 @@
 .DS_Store
 _SUCCESS
 *.log
-output/*
+# output/*
 part-*
 .*
 0000*

@@ -2,14 +2,10 @@ import sys
 #
 # >>> Escriba el codigo del mapper a partir de este punto <<<
 #
-if __name__ == "__main__":
+if __name__=="__main__":
+	for linea in sys.stdin:
+		key=linea.split("   ")[0]
+		val=linea.split("   ")[2]
+		val=float(val)
 
-    ##
-    ## itera sobre cada linea de codigo recibida
-    ## a traves del flujo de entrada
-    ## En cada línea elige la tercera columna y luego le asigna un 1 para el posterior conteo
-    for line in sys.stdin:
-        key = line.split("   ")[0]
-        val = line.split("   ")[2]
-        sys.stdout.write("{}\t{}".format(key,val))
-
+		sys.stdout.write("{}\t{}\n".format(key,val))
