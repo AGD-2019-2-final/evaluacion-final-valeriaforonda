@@ -40,3 +40,27 @@ u = LOAD 'data.csv' USING PigStorage(',')
 --
 -- >>> Escriba su respuesta a partir de este punto <<<
 --
+
+db = FOREACH u GENERATE birthday as fecha, SUBSTRING(birthday,5,7) as mes_largo,(int) SUBSTRING(birthday,5,7) as mes_corto;
+
+db_final = foreach db generate fecha,
+				case mes_largo
+				when '01'  then 'ene'
+				when '02'  then 'feb'
+				when '03'  then 'mar'
+				when '04'  then 'abr'
+				when '05'  then 'may'
+				when '06'  then 'jun'
+				when '07'  then 'jul'
+				when '08'  then 'ago'
+				when '09'  then 'sep'
+				when '10'  then 'oct'
+				when '11'  then 'nov'
+				when '12'  then 'dic'
+				end as nom_mes,
+				mes_largo,
+				mes_corto;
+
+
+
+store db_final into 'output' USING PigStorage(',');

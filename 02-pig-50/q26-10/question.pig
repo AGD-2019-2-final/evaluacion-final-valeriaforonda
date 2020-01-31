@@ -27,3 +27,12 @@ u = LOAD 'data.csv' USING PigStorage(',')
 --
 -- >>> Escriba su respuesta a partir de este punto <<<
 --
+
+
+db = FOREACH u GENERATE firstname, LOWER(SUBSTRING(firstname,0,1)) as letra;
+
+filtro = FILTER db BY letra >= 'm';
+
+nom_filtro = FOREACH filtro GENERATE firstname;
+
+store nom_filtro into 'output';

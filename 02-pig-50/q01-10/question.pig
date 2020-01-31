@@ -8,15 +8,15 @@
 fs -rm -f -r output;
 
 data = LOAD 'data.tsv' USING PigStorage('\t') 
-    AS (letra:CHARARRAY, 
-        fecha:CHARARRAY,
+    AS (key:CHARARRAY, 
+        date:CHARARRAY,
         cantidad:INT);
 DUMP data;
 
-groupletra = GROUP data BY letra;
-DUMP groupletra;
+groupkey = GROUP data BY key;
+DUMP groupkey;
 
-conteo = FOREACH groupletra GENERATE $0, COUNT(data);
+conteo = FOREACH groupkey GENERATE $0, COUNT(data);
 DUMP conteo;
 
 STORE conteo INTO 'output' using PigStorage('\t');

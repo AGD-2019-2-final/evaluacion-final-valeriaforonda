@@ -28,4 +28,16 @@
 fs -rm -f -r output;
 --
 
+db = LOAD 'data.csv' USING PigStorage(',') 
+    AS (id:INT, 
+        nombre:CHARARRAY,
+        apellido:CHARARRAY,
+        fecha:CHARARRAY,
+        color:CHARARRAY,
+        numero: int
+        );
+DUMP db;
 
+db_concat = foreach db generate CONCAT(nombre,'@',apellido);
+
+store db_concat into 'output' USING PigStorage(' ');

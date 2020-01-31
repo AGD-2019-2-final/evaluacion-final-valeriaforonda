@@ -20,3 +20,12 @@ u = LOAD 'data.csv' USING PigStorage(',')
 --
 -- >>> Escriba su respuesta a partir de este punto <<<
 --
+
+
+db = foreach u generate SUBSTRING(birthday,0,4) as anio;
+
+db_g = group db by anio;
+
+db_final = foreach db_g generate group,   COUNT(db);
+
+store db_final into 'output' USING PigStorage(',');

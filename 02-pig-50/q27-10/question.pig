@@ -26,3 +26,11 @@ u = LOAD 'data.csv' USING PigStorage(',')
 --
 -- >>> Escriba su respuesta a partir de este punto <<<
 --
+
+--INDEXOF(string, ‘character’, startIndex)
+
+db = FOREACH u GENERATE firstname, INDEXOF(firstname,'ia',0) as posicion;
+
+filtro = FOREACH db GENERATE posicion;
+
+store filtro into 'output';

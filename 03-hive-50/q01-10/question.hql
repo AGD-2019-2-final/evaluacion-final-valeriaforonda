@@ -12,6 +12,7 @@
 -- >>> Escriba su respuesta a partir de este punto <<<
 --
 
+
 !hdfs dfs -rm -r -f /input;
 !hdfs dfs -rm -r -f /output;
 !hdfs dfs -mkdir /input;
