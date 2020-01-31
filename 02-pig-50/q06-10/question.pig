@@ -12,22 +12,20 @@ fs -rm -f -r output;
 --
 -- >>> Escriba su respuesta a partir de este punto <<<
 --
-
-
-db = LOAD 'data.tsv' USING PigStorage('\t') 
+datos = LOAD 'data.tsv' USING PigStorage('\t') 
     AS (letra:CHARARRAY, 
         bolsa:bag{(a:CHARARRAY)},
         mapa:map[]);
--- DUMP db;
+DUMP datos;
 
-dbtmp= FOREACH db GENERATE FLATTEN(mapa) as clave;
--- dump dbtmp;
+datostmp= FOREACH datos GENERATE FLATTEN(mapa) as clave;
+dump datostmp;
 
 
-query= group dbtmp by clave;
--- dump query;
+resumen= group datostmp by clave;
+dump resumen;
 
-conteo = FOREACH query GENERATE group, COUNT(dbtmp);
--- dump conteo;
+conteo = FOREACH resumen GENERATE group, COUNT(datostmp);
+dump conteo;
 
 store conteo into 'output' using PigStorage(',');

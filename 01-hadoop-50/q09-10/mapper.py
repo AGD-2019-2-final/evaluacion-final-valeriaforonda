@@ -4,11 +4,11 @@ import sys
 #
 if __name__=="__main__":
 	for linea in sys.stdin:
-		key=linea.split("   ")[0]
-		fec=linea.split("   ")[1]
-		val=linea.split("   ")[2]
+		letra=linea.split("   ")[0]
+		fecha=linea.split("   ")[1]
+		valor=linea.split("   ")[2]
 
-		val=int(val)
-		val=str(val)
-		val=val.zfill(3)
-		sys.stdout.write("{}\t{}\t{}\t{}\n".format(val,key,fec,int(val)))
+		valor=int(valor)
+		valor=str(valor)
+		valor=valor.zfill(3)
+		sys.stdout.write("{}\t{}\t{}\t{}\n".format(valor,letra,fecha,int(valor)))

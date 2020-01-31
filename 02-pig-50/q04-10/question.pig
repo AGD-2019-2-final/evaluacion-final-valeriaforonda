@@ -27,8 +27,7 @@ fs -rm -f -r output;
 -- 
 --  >>> Escriba su respuesta a partir de este punto <<<
 -- 
-
-bd = LOAD 'truck_event_text_partition.csv' USING PigStorage(',') 
+data = LOAD 'truck_event_text_partition.csv' USING PigStorage(',') 
     AS (driverId:INT, 
         truckId:INT,
         eventTime:CHARARRAY,
@@ -40,15 +39,15 @@ bd = LOAD 'truck_event_text_partition.csv' USING PigStorage(',')
         driverName:CHARARRAY,
         routeId:CHARARRAY,
         routeDate:CHARARRAY);
-DUMP bd;
+DUMP data;
 
-query1 = LIMIT bd 10;
-DUMP query1;
+data10 = LIMIT data 10;
+DUMP data10;
 
-query2 = FOREACH query1 GENERATE driverId,truckId,eventTime;
-DUMP query2;
+datafilter = FOREACH data10 GENERATE driverId,truckId,eventTime;
+DUMP datafilter;
 
-query3 = ORDER query2 BY driverId, truckId, eventTime;
-DUMP query3;
+dataorder = ORDER datafilter BY driverId, truckId, eventTime;
+DUMP dataorder;
 
-STORE query3 INTO 'output' using PigStorage(',');
+STORE dataorder INTO 'output' using PigStorage(',');

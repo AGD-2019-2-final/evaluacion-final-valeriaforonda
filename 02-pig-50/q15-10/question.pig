@@ -24,13 +24,10 @@ u = LOAD 'data.csv' USING PigStorage(',')
         birthday:CHARARRAY, 
         color:CHARARRAY, 
         quantity:INT);
---
--- >>> Escriba su respuesta a partir de este punto <<<
---
 
-db = FOREACH u GENERATE firstname,color;
+datos = FOREACH u GENERATE firstname,color;
 
-filtro = FILTER db BY color == 'blue' and STARTSWITH(firstname,'Z');
+filtro = FILTER datos BY color == 'blue' and STARTSWITH(firstname,'Z');
 
 
 

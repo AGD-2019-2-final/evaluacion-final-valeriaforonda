@@ -12,36 +12,33 @@ fs -rm -f -r output;
 --
 -- >>> Escriba su respuesta a partir de este punto <<<
 --
-
-db = LOAD 'data.tsv' USING PigStorage('\t') 
+datos = LOAD 'data.tsv' USING PigStorage('\t') 
     AS (letra:CHARARRAY, 
         bolsa:bag{(a:CHARARRAY)},
         mapa:map[]);
---DUMP db;
+DUMP datos;
 
-rank_db = rank db;
+rank_datos = rank datos;
 
-tabla_cruce = foreach rank_db generate $0,$1;
+tabla_cruce = foreach rank_datos generate $0,$1;
 
-db_bolsa= FOREACH rank_db GENERATE rank_db, letra, FLATTEN(bolsa) as f_bolsa;
--- dump db_bolsa;
+datos_bolsa= FOREACH rank_datos GENERATE rank_datos, letra, FLATTEN(bolsa) as f_bolsa;
+DUMP datos_bolsa;
 
-agrupa_bolsa = group db_bolsa by rank_db;
--- dump agrupa_bolsa;
+agrupa_bolsa = group datos_bolsa by rank_datos;
+DUMP agrupa_bolsa;
 
-conteo_bolsa = FOREACH agrupa_bolsa GENERATE group,  COUNT(db_bolsa);
--- dump conteo_bolsa;
+conteo_bolsa = FOREACH agrupa_bolsa GENERATE group,  COUNT(datos_bolsa);
+DUMP conteo_bolsa;
 
+datos_mapa= FOREACH rank_datos GENERATE rank_datos, letra, FLATTEN(mapa) as f_mapa;
+DUMP datos_mapa;
 
-----------------------------------------------------
-db_mapa= FOREACH rank_db GENERATE rank_db, letra, FLATTEN(mapa) as f_mapa;
--- dump db_mapa;
+agrupa_mapa = group datos_mapa by rank_datos;
+DUMP agrupa_mapa;
 
-agrupa_mapa = group db_mapa by rank_db;
--- dump agrupa_mapa;
-
-conteo_mapa = FOREACH agrupa_mapa GENERATE group,  COUNT(db_mapa);
--- dump conteo_mapa;
+conteo_mapa = FOREACH agrupa_mapa GENERATE group,  COUNT(datos_mapa);
+DUMP conteo_mapa;
 
 join_1 = JOIN conteo_bolsa by $0 , conteo_mapa by $0;
 

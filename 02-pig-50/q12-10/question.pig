@@ -23,7 +23,7 @@
 -- 
 fs -rm -f -r output;
 --
-db = LOAD 'data.csv' USING PigStorage(',') 
+datos = LOAD 'data.csv' USING PigStorage(',') 
     AS (id:INT, 
         nombre:CHARARRAY,
         apellido:CHARARRAY,
@@ -31,12 +31,9 @@ db = LOAD 'data.csv' USING PigStorage(',')
         color:CHARARRAY,
         numero: int
         );
---
--- >>> Escriba su respuesta a partir de este punto <<<
---
 
 
-apellidos = FOREACH db GENERATE apellido, SUBSTRING($2,0,1) as letra;
+apellidos = FOREACH datos GENERATE apellido, SUBSTRING($2,0,1) as letra;
 filtro = FILTER apellidos BY letra >= 'D' and letra <= 'K';
 
 resultado = FOREACH filtro GENERATE apellido;

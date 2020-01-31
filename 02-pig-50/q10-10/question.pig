@@ -16,11 +16,9 @@
 -- 
 fs -rm -f -r output;
 --
---
 -- >>> Escriba su respuesta a partir de este punto <<<
 --
-
-db = LOAD 'data.csv' USING PigStorage(',') 
+datos = LOAD 'data.csv' USING PigStorage(',') 
     AS (id:INT, 
         nombre:CHARARRAY,
         apellido:CHARARRAY,
@@ -29,7 +27,7 @@ db = LOAD 'data.csv' USING PigStorage(',')
         numero: int
         );
 
-apellido = foreach db generate apellido;
+apellido = foreach datos generate apellido;
 
 apellido_conteo = foreach apellido generate apellido,SIZE(apellido);
 

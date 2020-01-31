@@ -8,7 +8,6 @@ fs -rm -f -r output;
 -- 
 --  >>> Escriba el codigo del mapper a partir de este punto <<<
 -- 
-
 datos = LOAD 'data.tsv' USING PigStorage('\t') 
     AS (letra:CHARARRAY, 
         fecha:CHARARRAY,

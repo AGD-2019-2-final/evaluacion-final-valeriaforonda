@@ -4,12 +4,20 @@ import sys
 #
 if __name__ == '__main__':
 
-    ##
-    ## cada linea de texto recibida es una
-    ## entrada clave \tabulador valor
-    ##
+    curkey = None
+    total = 0
+
     for line in sys.stdin:
 
-        val, key, valor = line.split("\t")
-        valor = int(valor)
-        sys.stdout.write("{},{}\n".format(key, valor))
+        val, key, val = line.split("\t")
+        val = int(val)
+
+        if key == curkey:
+            total += val
+        else:
+            if curkey is not None:
+                sys.stdout.write("{},{}\n".format(curkey, total))
+            curkey = key
+            total = val
+
+    sys.stdout.write("{},{}\n".format(key, total))
